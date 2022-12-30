@@ -1,0 +1,46 @@
+<div class="main-container">
+
+    <form class="mat-elevation-z8 form-container" (ngSubmit)="login(utenteForm)" #utenteForm="ngForm" class="row g-3">
+
+        <h2>Login</h2>
+
+        <div class="row-form-container">
+            <mat-form-field appearance="fill" class="input-form">
+
+                    <mat-label>Username</mat-label>
+                    <input matInput type="text" class="form-control" placeholder="Inserire Username" required minlength="4"
+                        id="username" name="username" [(ngModel)]="utente.username" #usernameVar="ngModel"
+                        [ngClass]="{'is-invalid': (usernameVar.touched || usernameVar.dirty) && !usernameVar.valid }">
+                    <span class="invalid-feedback">
+                        <mat-error *ngIf="usernameVar.errors?.['required']">Prego inserire un valore</mat-error>
+                        <mat-error *ngIf="usernameVar.errors?.['minlength']">
+                            Il campo deve avere almeno quattro caratteri.
+                        </mat-error>
+                    </span>
+              </mat-form-field>
+
+              <mat-divider></mat-divider>
+
+              <mat-form-field appearance="fill" class="input-form">
+
+                <mat-label>Password</mat-label>
+                <input matInput type="text" class="form-control" placeholder="Inserire Password" required minlength="4"
+                    id="password" name="password" [(ngModel)]="utente.password" #passwordVar="ngModel"
+                    [ngClass]="{'is-invalid': (passwordVar.touched || passwordVar.dirty) && !passwordVar.valid }">
+                <span class="invalid-feedback">
+                    <mat-error *ngIf="passwordVar.errors?.['required']">Prego inserire un valore</mat-error>
+                    <mat-error *ngIf="passwordVar.errors?.['minlength']">
+                        Il campo deve avere almeno quattro caratteri.
+                    </mat-error>
+                </span>
+            </mat-form-field>
+            
+            <div class="col-12 mb-3 mt-5">
+            <button type="submit" name="submit" value="submit" id="submit" 
+            mat-raised-button [disabled]="utenteForm.invalid">Conferma</button>
+            </div>
+        </div>
+
+    </form>
+
+</div>
