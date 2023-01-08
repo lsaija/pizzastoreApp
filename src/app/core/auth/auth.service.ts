@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject, map, Observable, of, switchMap } from 'rxjs';
 import { Utente } from 'src/app/models/utente';
 
@@ -8,63 +9,59 @@ import { Utente } from 'src/app/models/utente';
 })
 export class AuthService {
 
-  private apiServer = 'http://localhost:8080/api/auth/login';
-  private apiServerUtente = 'http://localhost:8080/api/utente/userInfo';
+  private apiServer = 'http://localhost:8080/api';
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
     })
   }
+  constructor(private http: HttpClient, private router: Router) { }
+  
 
-  constructor(private http: HttpClient) { }
-
-  private userLoggedSubject$: BehaviorSubject<Utente | null> = new BehaviorSubject<Utente | null>(null);
+  private userLoggedSubject$: BehaviorSubject<Utente | null> = new BehaviorSubject<Utente | null>(null)
 
   login(loginForm: Utente): Observable<Utente> {
-    return this.http.post<{'jwt-token': string}>(this.apiServer, JSON .stringify(loginForm), this.httpOptions).pipe(
+    return this.http.post<{'jwt-token': string}>(this.apiServer + "/auth/login", JSON .stringify(loginForm), this.httpOptions).pipe(
       switchMap(res => of({ username: loginForm.username, token: res['jwt-token'] }))
     );
   }
 
-  roles(): Observable<string> {
-    return this.http.get<{ roles: string }>(this.apiServerUtente).pipe(map(res => res.roles));
+  setUserLogged(user: Utente | null) {
+    this.userLoggedSubject$.next(user);
+    if(user != null) {
+    this.getUserRoles().subscribe({
+      next: res => user!.role = res.roles,
+      complete: () => {
+        this.userLoggedSubject$.next(user);
+        if(user.role?.find(role => role === "ROLE_FATTORINO")){
+          this.router.navigate(["/ordine/list"], {queryParams: {fattorino: "true"}});
+        } else {
+          this.router.navigateByUrl("welcome");
+        }
+      }
+    });
   }
-
-  setUserLogged(utente:Utente | null) {
-    this.userLoggedSubject$.next(utente);
   }
 
   getUserLogged(): Observable<Utente | null> {
     return this.userLoggedSubject$.asObservable();
   }
 
-  getUserRoles(): string | null | undefined{
-    return this.userLoggedSubject$.value ? this.userLoggedSubject$.value.role : null;
+  getUserRoles(): Observable<{roles: string[]}> {
+    return this.http.get<{roles: string[]}>(this.apiServer + "/utente/userInfo");
   }
 
   isLoggedIn(): boolean {
     return this.userLoggedSubject$.value ? !!this.userLoggedSubject$.value.token : false;
   }
 
-  getUserToken(): string | null | undefined {
+  getUserToken(): string | null | undefined  {
     return this.userLoggedSubject$.value ? this.userLoggedSubject$.value.token : null;
   }
 
-  logout() {
+  logout() {    
     this.setUserLogged(null);
   }
 
-  private handleError(err: HttpErrorResponse) {
-    let errorMessage = '';
-    if (err.error instanceof ErrorEvent) {
-      errorMessage = `An error occurred: ${err.error.message}`;
-    } else {
-      errorMessage = `Server returned code: ${err.status}, error message is: ${err.message}`;
-      err.error?.errors?.forEach((element: { message: string; }) => {
-        errorMessage += element.message;
-      });
-    }
-    console.error(errorMessage);
-  }
 }
 

@@ -1,2 +1,37 @@
+/* You can add global styles to this file, and also import other style files */
+
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
+
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  }
+
+  @media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+    }
+  }
+  main > .container {
+    padding: 60px 15px 0;
+
+  }
+
+  :root {
+    --success-color: #198754;
+    --delete-color: #dc3545;
+  }
+
+  .blue{
+    --mdc-snackbar-container-color: var(--success-color);
+    /* --mat-mdc-snack-bar-button-color: var(--white-color); */
+}
+
+.red{
+  --mdc-snackbar-container-color: var(--delete-color);
+  /* --mat-mdc-snack-bar-button-color: var(--white-color); */
+}

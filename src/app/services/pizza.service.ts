@@ -46,6 +46,10 @@ export class PizzaService {
     ; 
   }
 
+  search(example: Pizza): Observable<Pizza[]> {
+    return this.http.post<Pizza[]>(this.apiServer + "/search", example, this.httpOptions);
+  }
+
   
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

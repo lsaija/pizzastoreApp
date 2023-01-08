@@ -1,0 +1,134 @@
+<div style="padding: 200px;" *ngIf="urlSearchOperationFlag != 'false'">
+    <button mat-icon-button color="primary" (click)="onClickAddNew()"
+        *appIfRoles="['ROLE_PIZZAIOLO']"><mat-icon>add</mat-icon></button>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="background-color:#9119a7">
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef style="background-color:#821196"> ID </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="data">
+            <th mat-header-cell *matHeaderCellDef style="background-color:#821196"> DATA </th>
+            <td mat-cell *matCellDef="let element"> {{element.data | date:"yyyy-MM-dd"}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="codice">
+            <th mat-header-cell *matHeaderCellDef style="background-color:#821196"> CODICE </th>
+            <td mat-cell *matCellDef="let element"> {{element.codice }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="costoTotale">
+            <th mat-header-cell *matHeaderCellDef style="background-color:#821196"> COSTO TOTALE </th>
+            <td mat-cell *matCellDef="let element"> {{element.costoTotale}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="closed">
+            <th mat-header-cell *matHeaderCellDef style="background-color:#821196"> CONSEGNATO </th>
+            <td mat-cell *matCellDef="let element"> {{element.closed?'SI':'NO'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="azioni">
+            <th mat-header-cell *matHeaderCellDef style="background-color:#821196"> </th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button  aria-label="Example icon button with a home icon"
+                    *appIfRoles="['ROLE_PIZZAIOLO']" (click)="showDetail(element.id)">
+                    <mat-icon>visibility</mat-icon>
+                </button>
+                <button mat-icon-button style="color:yellow;" aria-label="Example icon button with a home icon"
+                    *appIfRoles="['ROLE_PIZZAIOLO']" (click)="onClickUpdate(element.id)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" aria-label="Example icon button with a home icon"
+                    *appIfRoles="['ROLE_PIZZAIOLO']" (click)="onClickDelete(element.id)">
+                    <mat-icon>toggle_on</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" aria-label="Example icon button with a home icon"
+                    *appIfRoles="['ROLE_FATTORINO']" (click)="onClickDelete(element.id)">
+                    <mat-icon>toggle_on</mat-icon>
+                </button>
+
+            </td>
+
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+
+    <mat-paginator style="background-color:#821196" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+        aria-label="Select page of users"></mat-paginator>
+    <div *appIfRoles="['ROLE_PIZZAIOLO']">
+        <button mat-raised-button color="primary" type="submit" class="button" (click)="resetDataSource()"
+            *ngIf="urlSearchOperationFlag=='true'">Back</button>
+    </div>
+
+    <div *appIfRoles="['ROLE_PROPRIETARIO']">
+        <button mat-raised-button color="primary" type="submit" class="button" routerLink="/welcome"
+            *ngIf="urlSearchOperationFlag=='true'">Back</button>
+    </div>
+
+</div>
+
+
+
+<div style="padding: 150px;" *ngIf="urlSearchOperationFlag == 'false'">
+
+ 
+<br>
+<br>
+    <div style=" font-weight: bolder; font-size: x-large;"  >
+
+
+        Clienti Affezionati nell'intervallo selezionato:
+    </div>
+<br>
+
+    <table mat-table [dataSource]="clientiDataSource" class="mat-elevation-z8" style="background-color:#9119a7">
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef style="background-color:#821196"> ID </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="nome">
+            <th mat-header-cell *matHeaderCellDef style="background-color:#821196"> NOME </th>
+            <td mat-cell *matCellDef="let element"> {{element.nome }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cognome">
+            <th mat-header-cell *matHeaderCellDef style="background-color:#821196"> COGNOME </th>
+            <td mat-cell *matCellDef="let element"> {{element.cognome }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="indirizzo">
+            <th mat-header-cell *matHeaderCellDef  style="background-color:#821196"> INDIRIZZO </th>
+            <td mat-cell *matCellDef="let element"> {{element.indirizzo}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="attivo">
+            <th mat-header-cell *matHeaderCellDef style="background-color:#821196"> ATTIVO </th>
+            <td mat-cell *matCellDef="let element"> {{element.attivo?'SI':'NO'}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedClientiColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedClientiColumns;"></tr>
+
+    </table>
+
+    <mat-paginator style="background-color:#821196" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+        aria-label="Select page of users"></mat-paginator>
+
+        <br>
+        <br>
+
+    <div class="statistiche">
+        Ricavi totali nell’intervallo selezionato: {{ricavi}} <br><br>
+    
+        Numero ordini totali nell’intervallo selezionato: {{ordini}}  <br><br>
+    
+        Numero pizze totali ordinate nell’intervallo selezionato: {{pizze}}<br><br>
+</div>
+<div *appIfRoles="['ROLE_PROPRIETARIO']" align="center" >
+    <button mat-raised-button color="primary" type="submit" class="button "style="font-size: x-large;"  routerLink="/welcome" >Back</button>
+</div>
+</div>

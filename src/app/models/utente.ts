@@ -8,8 +8,8 @@ export interface Utente {
     cognome?:string;
     email?:string;
     dateCreated?: Date;
-    token:string;
-    role?:string;
+    token?:string;
+    role?:string[];
     stato?: 'ATTIVO' |'DISABILITATO' |'CREATO';
    
 }

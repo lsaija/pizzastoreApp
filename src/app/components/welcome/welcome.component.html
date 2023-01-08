@@ -1,0 +1,39 @@
+
+<div class="contenitore" style="height: 40vh;">
+    <mat-card class="main-card" style="padding: 100px; background-color: #FF9100; height: 50vh;">
+      <mat-card-header >
+        <mat-card-title style="font-size: xxx-large;" >Benvenuto su Pizza Store!</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <br>
+        <p style="font-size: x-large;" >
+          Gestisci i tuoi ordini in maniera sempre più facile.
+        </p>
+      </mat-card-content>
+      <mat-card-actions *appIfRoles="['ROLE_ADMIN']">
+        <button mat-raised-button color="primary" routerLink="/cliente/list">Vai a Lista Clienti</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+<div class="main-div" >
+  <div class="contenitore" *appIfRoles="['ROLE_PIZZAIOLO']" style="float:left;" >
+    <app-card-welcome [cardBody]="'Gestisci il menu pizze'" [cardLink]="'/pizza/list'" [cardTitle]="'Gestione Pizze'"></app-card-welcome>  
+  </div>
+
+  <div class="contenitore" *appIfRoles="['ROLE_PIZZAIOLO']"style="float:left;">
+    <app-card-welcome [cardBody]="'Inserisci nuovi ordini'" [cardLink]="'/ordine/create'" [cardTitle]="'Aggiungi Ordine'"></app-card-welcome>
+  </div>
+
+  <div class="contenitore" *appIfRoles="['ROLE_PIZZAIOLO']"style="float:left;">
+    <app-card-welcome [cardBody]="'Gestisci tutti gli ordini'" [cardLink]="'/ordine/list'" [cardTitle]="'Gestione Ordini'"></app-card-welcome>
+  </div>
+
+  <div class="contenitore" *appIfRoles="['ROLE_PROPRIETARIO']"style="float:left;">
+    <app-card-welcome [cardBody]="'Ricerca ordini'" [cardLink]="'/ordine/report'" [cardTitle]="'Report Ordini'"></app-card-welcome>
+  </div>
+    <div class="contenitore" *appIfRoles="['ROLE_PROPRIETARIO']"style="float:left;">
+    <app-card-welcome [cardBody]="'Statistiche andamento ordini '" [cardLink]="'/ordine/statistiche'" [cardTitle]="'Statistiche Pizzeria'"></app-card-welcome>
+  </div>
+</div>
+  

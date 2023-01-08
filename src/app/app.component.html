@@ -1,1 +1,10 @@
-<router-outlet></router-outlet>
+<!DOCTYPE html>
+<html style="background-color: #FFAB40;">
+    
+
+<body >
+    <app-toolbar [isLogged]="authService.isLoggedIn()" ></app-toolbar>
+   <router-outlet></router-outlet>
+</body>
+</html>
+

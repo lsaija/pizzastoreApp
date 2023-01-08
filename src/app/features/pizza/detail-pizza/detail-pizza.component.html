@@ -1,0 +1,47 @@
+
+
+<div class="container" align="center" style="padding: 100px; background-color: rgba(132, 149, 233, 0.529);" >
+    <mat-card class="form" style="background-color: darkgreen">
+
+        <mat-card-header>
+            <mat-card-title *ngIf="urlFlag =='readOnlyActivated'">Visualizza dettaglio</mat-card-title>
+            <mat-card-title *ngIf="urlFlag =='addActivated'">Inserisci nuovo elemento</mat-card-title>
+            <mat-card-title *ngIf="urlFlag =='editActivated'">Modifica elemento</mat-card-title>
+            <mat-card-title *ngIf="urlFlag =='searchActivated'">Ricerca elemento</mat-card-title>
+
+
+        </mat-card-header>
+        <form style="background-color: darkgreen" (ngSubmit)="handleFormRequest()" [formGroup]="pizzaReactive">
+
+                <mat-form-field class="form-element">
+                    <input matInput name="descrizione" type="text" formControlName="descrizione" placeholder="inserisci descrizione..."  >
+                    <mat-error *ngIf="pizzaReactive!.get('descrizione')?.hasError('required')">Descrizione obbligatoria</mat-error>
+                    <mat-error *ngIf="pizzaReactive!.get('descrizione')?.hasError('minlength')">La Descrizione deve avere almeno 4 caratteri</mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="form-element">
+                    <input matInput name="ingredienti" type="text" formControlName="ingredienti" placeholder="inserisci ingredienti..." >
+                    <mat-error *ngIf="pizzaReactive!.get('ingredienti')?.hasError('required')">Ingredienti obbligatori</mat-error>
+                    <mat-error *ngIf="pizzaReactive!.get('ingredienti')?.hasError('minlength')">Il campo Ingredienti deve avere almeno 4 caratteri</mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="form-element">
+                    <input matInput name="prezzo" type="number" formControlName="prezzo" placeholder="inserisci prezzo ..." >
+                    <mat-error *ngIf="pizzaReactive!.get('prezzo')?.hasError('required')">Prezzo  obbligatorio</mat-error>
+                </mat-form-field>
+
+                <section class="form-element" *ngIf="urlFlag!= 'searchActivated'">
+                    <mat-checkbox formControlName="attivo">Attivo</mat-checkbox>
+                </section>
+
+
+            <div class="form-element">
+                <button mat-raised-button color="primary" type="submit" class="button" *ngIf="urlFlag != 'readOnlyActivated'">Submit Form</button>
+            </div>
+            <div class="form-element">
+                <button mat-raised-button color="accent" type="submit" class="button" routerLink="/pizza/list">Back</button>
+            </div>
+
+        </form>
+    </mat-card>
+</div>

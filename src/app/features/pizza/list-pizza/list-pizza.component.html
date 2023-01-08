@@ -1,0 +1,58 @@
+<div style="padding: 200px;" >
+    <button mat-icon-button color="primary" (click)="onClickAddNew()"><mat-icon>add</mat-icon></button>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="background-color:#9119a7 ;">
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef style="background-color:#821196"> ID </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="descrizione" >
+            <th mat-header-cell *matHeaderCellDef style="background-color:#821196"> DESCRIZIONE </th>
+            <td mat-cell *matCellDef="let element"> {{element.descrizione }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="ingredienti" >
+            <th mat-header-cell *matHeaderCellDef style="background-color:#821196"> INGREDIENTI </th>
+            <td mat-cell *matCellDef="let element"> {{element.ingredienti }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="prezzo" >
+            <th mat-header-cell *matHeaderCellDef style="background-color:#821196"> PREZZO  </th>
+            <td mat-cell *matCellDef="let element"> {{element.prezzo}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="attivo" >
+            <th mat-header-cell *matHeaderCellDef style="background-color:#821196"> ATTIVO </th>
+            <td mat-cell *matCellDef="let element"> {{element.attivo?'SI':'NO'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="azioni" >
+            <th mat-header-cell *matHeaderCellDef style="background-color:#821196"> </th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button  aria-label="Example icon button with a home icon"
+                    (click)="showDetail(element.id)">
+                    <mat-icon>visibility</mat-icon>
+                </button>
+                <button mat-icon-button style="color:yellow;" aria-label="Example icon button with a home icon"
+                    (click)="onClickUpdate(element.id)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" aria-label="Example icon button with a home icon"
+                    (click)="onClickDelete(element.id)">
+                    <mat-icon>toggle_on</mat-icon>
+                </button>
+
+            </td>
+
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns" ></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
+
+    </table>
+
+    <mat-paginator style="background-color:#821196 ;"  [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+        aria-label="Select page of users"></mat-paginator>
+        <button mat-raised-button color="primary" type="submit" class="button" (click)="resetDataSource()" *ngIf="urlSearchOperationFlag=='true'">Back</button>
+
+</div>

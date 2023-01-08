@@ -1,46 +1,34 @@
-<div class="main-container">
 
-    <form class="mat-elevation-z8 form-container" (ngSubmit)="login(utenteForm)" #utenteForm="ngForm" class="row g-3">
 
-        <h2>Login</h2>
-
-        <div class="row-form-container">
-            <mat-form-field appearance="fill" class="input-form">
-
-                    <mat-label>Username</mat-label>
-                    <input matInput type="text" class="form-control" placeholder="Inserire Username" required minlength="4"
-                        id="username" name="username" [(ngModel)]="utente.username" #usernameVar="ngModel"
-                        [ngClass]="{'is-invalid': (usernameVar.touched || usernameVar.dirty) && !usernameVar.valid }">
-                    <span class="invalid-feedback">
-                        <mat-error *ngIf="usernameVar.errors?.['required']">Prego inserire un valore</mat-error>
-                        <mat-error *ngIf="usernameVar.errors?.['minlength']">
-                            Il campo deve avere almeno quattro caratteri.
-                        </mat-error>
-                    </span>
-              </mat-form-field>
-
-              <mat-divider></mat-divider>
-
-              <mat-form-field appearance="fill" class="input-form">
-
-                <mat-label>Password</mat-label>
-                <input matInput type="text" class="form-control" placeholder="Inserire Password" required minlength="4"
-                    id="password" name="password" [(ngModel)]="utente.password" #passwordVar="ngModel"
-                    [ngClass]="{'is-invalid': (passwordVar.touched || passwordVar.dirty) && !passwordVar.valid }">
-                <span class="invalid-feedback">
-                    <mat-error *ngIf="passwordVar.errors?.['required']">Prego inserire un valore</mat-error>
-                    <mat-error *ngIf="passwordVar.errors?.['minlength']">
-                        Il campo deve avere almeno quattro caratteri.
-                    </mat-error>
-                </span>
-            </mat-form-field>
-            
-            <div class="col-12 mb-3 mt-5">
-            <button type="submit" name="submit" value="submit" id="submit" 
-            mat-raised-button [disabled]="utenteForm.invalid">Conferma</button>
-            </div>
+<main class="form-signin " style="background-color: #FF9100" >
+    <div class="main-container" style="background-color: antiquewhite;" >
+  
+      <form class="mat-elevation-z8 form-container" (ngSubmit)="onClick()" [formGroup]="userReactive" style="background-color:#FF9800"> 
+            <h3 style="  text-align: center; font-size: xx-large; font-family: Georgia, 'Times New Roman', Times, serif; color: black;">Accedi</h3>
+        <div class="row-form-container" >
+          <mat-form-field appearance="fill" class="input-form" >
+            <mat-label style="font-style: oblique;">Username</mat-label>
+            <input matInput name="username" type="text" formControlName="username" placeholder="Inserire Username" style="font-style: oblique;">
+            <mat-error *ngIf="userReactive.get('username')?.hasError('required')">Username obbligatorio</mat-error>
+            <mat-error *ngIf="userReactive.get('username')?.hasError('minlength')">Il campo Username deve avere almeno 3
+              caratteri</mat-error>
+          </mat-form-field>
         </div>
-
-    </form>
-
-</div>
+        <div class="row-form-container ">
+          <mat-form-field appearance="fill" class="input-form" >
+            <mat-label style="font-style: oblique;">Password</mat-label>
+            <input matInput name="password" type="password" formControlName="password" placeholder="Inserire la password" style="font-style: oblique;">
+            <mat-error *ngIf="userReactive.get('password')?.hasError('required')">Password obbligatoria</mat-error>
+            <mat-error *ngIf="userReactive.get('password')?.hasError('minlength')">Il campo Password deve avere almeno 3
+              caratteri</mat-error>
+          </mat-form-field>
+        </div>
+  
+        <div style="display:flex; justify-content:center;" >
+          <button type="submit" [disabled]="userReactive.invalid" mat-raised-button color="primary" style="font-style: oblique;">Sign in</button>
+        </div>
+  
+      </form>
+  
+    </div>
+  </main>

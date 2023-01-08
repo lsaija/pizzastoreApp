@@ -69,9 +69,4 @@ export class UtenteService {
     };
   }
 
-  mostraRuolo(): string[]{
-    let result:string[]=[];
-    result.push(this.authService.roles().toString());
-    return result;
-  }
 }

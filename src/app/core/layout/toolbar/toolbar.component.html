@@ -1,0 +1,13 @@
+<mat-toolbar color="primary">
+    <button mat-button routerLink="/welcome" [disabled]="toggle()">Home</button>
+    <button mat-button *appIfRoles="['ROLE_ADMIN']" (click)="ricercaClienti()">Ricerca Clienti</button>
+    <button mat-button *appIfRoles="['ROLE_PIZZAIOLO']" (click)="ricercaPizze()">Ricerca Pizze</button>
+    <button mat-button *appIfRoles="['ROLE_PIZZAIOLO']" (click)="ricercaOrdini()">Ricerca Ordini</button>
+
+
+    <span class="example-spacer"></span>
+    <div>
+      <span style="font-size: smaller;">User:</span>     {{ (authService.getUserLogged() | async)?.username | uppercase}} 
+    </div>
+    <button mat-button color="warn" (click)="logout()">Logout</button>
+  </mat-toolbar>

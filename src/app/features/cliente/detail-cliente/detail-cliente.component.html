@@ -1,0 +1,50 @@
+<div class="container" align="center" style="padding: 200px; background-color:#FFAB40;" >
+    <mat-card class="form" style="background-color: #821196" >
+
+        <mat-card-header>
+            <mat-card-title *ngIf="urlFlag =='readOnlyActivated'">Visualizza dettaglio</mat-card-title>
+            <mat-card-title *ngIf="urlFlag =='addActivated'">Inserisci nuovo elemento</mat-card-title>
+            <mat-card-title *ngIf="urlFlag =='editActivated'">Modifica elemento</mat-card-title>
+            <mat-card-title *ngIf="urlFlag =='searchActivated'">Ricerca elemento</mat-card-title>
+
+
+        </mat-card-header>
+        <form style="background-color:#9119a7" (ngSubmit)="handleFormRequest()" [formGroup]="clienteReactive">
+            <br>
+               <div >
+                <mat-form-field class="form-element">
+                    <input matInput name="nome" type="text" formControlName="nome" placeholder="inserisci nome..."  >
+                    <mat-error *ngIf="clienteReactive!.get('nome')?.hasError('required')">Nome obbligatorio</mat-error>
+                    <mat-error *ngIf="clienteReactive!.get('nome')?.hasError('minlength')">Il nome deve avere almeno 4 caratteri</mat-error>
+                </mat-form-field>
+            </div>
+                <mat-form-field class="form-element">
+                    <input matInput name="cognome" type="text" formControlName="cognome" placeholder="inserisci cognome..." >
+                    <mat-error *ngIf="clienteReactive!.get('cognome')?.hasError('required')">Cognome obbligatorio</mat-error>
+                    <mat-error *ngIf="clienteReactive!.get('cognome')?.hasError('minlength')">Il cognome deve avere almeno 4 caratteri</mat-error>
+                </mat-form-field>
+            <div>
+                <mat-form-field class="form-element">
+                    <input matInput name="indirizzo" type="text" formControlName="indirizzo" placeholder="inserisci indirizzo..." >
+                    <mat-error *ngIf="clienteReactive!.get('indirizzo')?.hasError('required')">Indirizzo obbligatorio</mat-error>
+                    <mat-error *ngIf="clienteReactive!.get('indirizzo')?.hasError('minlength')">L' Indirizzo deve avere almeno 5 caratteri</mat-error>
+                    <mat-error *ngIf="clienteReactive!.get('indirizzo')?.hasError('maxlength')">L' Indirizzo deve avere massimo 30 caratteri</mat-error>
+                </mat-form-field>
+            </div>
+        
+                 <section class="form-element" *ngIf="urlFlag!= 'searchActivated'"> 
+                    <mat-checkbox formControlName="attivo">Attivo</mat-checkbox>
+                    <mat-error *ngIf="clienteReactive!.get('attivo')?.hasError('required')">Stato obbligatorio</mat-error>
+                </section>
+
+
+            <div class="form-element">
+                <button mat-raised-button color="primary" type="submit" class="button" *ngIf="urlFlag != 'readOnlyActivated'">Submit Form</button>
+            </div>
+            <div class="form-element">
+                <button mat-raised-button color="accent" type="submit" class="button" routerLink="/cliente/list">Back</button>
+            </div>
+
+        </form>
+    </mat-card>
+</div>

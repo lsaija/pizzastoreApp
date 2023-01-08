@@ -1,7 +1,8 @@
 import { Directive, ElementRef, Input } from '@angular/core';
 
 @Directive({
-  selector: '[isLogged]'
+  selector: '[isLogged]',
+  standalone: true,
 })
 export class IsLoggedDirective {
 
@@ -14,9 +15,6 @@ export class IsLoggedDirective {
     }
 
   }
-
-
-
 
 
   constructor(private elementRef:ElementRef) { }

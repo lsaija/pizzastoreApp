@@ -46,6 +46,10 @@ export class ClienteService {
     ; 
   }
 
+  search(example: Cliente): Observable<Cliente[]> {
+    return this.http.post<Cliente[]>(this.apiServer + "/search", example, this.httpOptions);
+  }
+
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

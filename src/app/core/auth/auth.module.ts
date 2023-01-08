@@ -4,6 +4,8 @@ import { LoginComponent } from './login/login.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/shared/material/material.module';
+import { IsLoggedDirective } from 'src/app/shared/directives/is-logged.directive';
+import { IfRolesDirective } from 'src/app/shared/directives/if-roles.directive';
 
 const routes: Routes = [
   {
@@ -21,7 +23,9 @@ const routes: Routes = [
     RouterModule,
     RouterModule.forChild(routes),
     FormsModule,
-    MaterialModule
+    MaterialModule,
+    IsLoggedDirective,
+    IfRolesDirective
   ],
   exports:[
     LoginComponent
